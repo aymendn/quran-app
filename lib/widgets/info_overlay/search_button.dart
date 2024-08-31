@@ -13,7 +13,7 @@ class SearchButton extends StatelessWidget {
         Navigator.pushNamed(context, '/search');
       },
       style: ElevatedButton.styleFrom(
-        primary: const Color(0x99575757),
+        backgroundColor: const Color(0x99575757),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,20 +1,20 @@
-import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_controller.dart' as carousel;
 import 'package:flutter/material.dart';
 
-import '../quran/quran.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../quran/quran.dart';
 import '../quran/page_data.dart';
 
 class Quran extends ChangeNotifier {
   late int currentPage;
   final SharedPreferences prefs;
+  final carousel.CarouselSliderController carouselController =
+      carousel.CarouselSliderController();
 
   Quran(this.prefs) {
     currentPage = prefs.getInt('page') ?? 1;
   }
-
-  final carouselController = CarouselController();
 
   int get surahNumber => quranPages[currentPage - 1].surah;
 
@@ -33,12 +33,20 @@ class Quran extends ChangeNotifier {
   String get surahData => getSurahDataWithName(surahNumber);
 
   void goToPage(int pageIndex) {
+    if (pageIndex < 0 || pageIndex >= quranPages.length) {
+      // Handle invalid pageIndex
+      return;
+    }
     carouselController.jumpToPage(pageIndex);
   }
 
   void changePage(int newIndex) {
+    if (newIndex < 0 || newIndex >= quranPages.length) {
+      // Handle invalid newIndex
+      return;
+    }
     currentPage = newIndex + 1;
     notifyListeners();
-    prefs.setInt('page', newIndex + 1);
+    prefs.setInt('page', currentPage);
   }
 }

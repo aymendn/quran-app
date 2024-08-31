@@ -9,7 +9,7 @@ class AppTheme {
   static ThemeData darkThemeData = themeData(darkColorScheme);
 
   static ThemeData themeData(ColorScheme colorScheme) {
-    final onBg = colorScheme.onBackground;
+    final onBg = colorScheme.onSurface;
     return ThemeData(
       // useMaterial3: true,
       colorScheme: colorScheme,
@@ -20,7 +20,7 @@ class AppTheme {
         toolbarHeight: 45,
         color: colorScheme.appBar,
         foregroundColor: onBg,
-        titleTextStyle: _textTheme.headline5!.copyWith(
+        titleTextStyle: _textTheme.headlineSmall!.copyWith(
           fontFamily: secondaryFontFamily,
           fontWeight: FontWeight.bold,
           color: onBg,
@@ -28,19 +28,22 @@ class AppTheme {
         elevation: 0,
       ),
       textTheme: TextTheme(
-        headline1: TextStyle(fontWeight: _bold, fontSize: 48, color: onBg),
-        headline2: TextStyle(fontWeight: _bold, fontSize: 38, color: onBg),
-        headline3: TextStyle(fontWeight: _semiBold, fontSize: 32, color: onBg),
-        headline4: TextStyle(fontWeight: _semiBold, fontSize: 24, color: onBg),
-        headline5: TextStyle(fontWeight: _medium, fontSize: 20, color: onBg),
-        headline6: TextStyle(fontWeight: _regular, fontSize: 18, color: onBg),
+        displayLarge: TextStyle(fontWeight: _bold, fontSize: 48, color: onBg),
+        displayMedium: TextStyle(fontWeight: _bold, fontSize: 38, color: onBg),
+        displaySmall:
+            TextStyle(fontWeight: _semiBold, fontSize: 32, color: onBg),
+        headlineMedium:
+            TextStyle(fontWeight: _semiBold, fontSize: 24, color: onBg),
+        headlineSmall:
+            TextStyle(fontWeight: _medium, fontSize: 20, color: onBg),
+        titleLarge: TextStyle(fontWeight: _regular, fontSize: 18, color: onBg),
         //
-        bodyText1: const TextStyle(
+        bodyLarge: const TextStyle(
             fontWeight: _regular, fontSize: 16, color: Colors.white),
-        bodyText2: const TextStyle(fontWeight: _bold, fontSize: 16),
+        bodyMedium: const TextStyle(fontWeight: _bold, fontSize: 16),
         //
-        caption: const TextStyle(fontWeight: _semiBold, fontSize: 16),
-        button: const TextStyle(fontWeight: _bold, fontSize: 18),
+        bodySmall: const TextStyle(fontWeight: _semiBold, fontSize: 16),
+        labelLarge: const TextStyle(fontWeight: _bold, fontSize: 18),
         //
       ),
     );
@@ -64,20 +67,20 @@ class AppTheme {
   static const _bold = FontWeight.w700;
 
   static const TextTheme _textTheme = TextTheme(
-    headline1: TextStyle(fontWeight: _bold, fontSize: 72),
-    headline2: TextStyle(fontWeight: _bold, fontSize: 48),
-    headline3: TextStyle(fontWeight: _semiBold, fontSize: 32),
-    headline4: TextStyle(fontWeight: _semiBold, fontSize: 24),
-    headline5: TextStyle(fontWeight: _medium, fontSize: 18),
-    headline6: TextStyle(fontWeight: _regular, fontSize: 16),
+    displayLarge: TextStyle(fontWeight: _bold, fontSize: 72),
+    displayMedium: TextStyle(fontWeight: _bold, fontSize: 48),
+    displaySmall: TextStyle(fontWeight: _semiBold, fontSize: 32),
+    headlineMedium: TextStyle(fontWeight: _semiBold, fontSize: 24),
+    headlineSmall: TextStyle(fontWeight: _medium, fontSize: 18),
+    titleLarge: TextStyle(fontWeight: _regular, fontSize: 16),
     //
-    subtitle1: TextStyle(fontWeight: _medium, fontSize: 16.0),
-    subtitle2: TextStyle(fontWeight: _medium, fontSize: 14.0),
+    titleMedium: TextStyle(fontWeight: _medium, fontSize: 16.0),
+    titleSmall: TextStyle(fontWeight: _medium, fontSize: 14.0),
     //
-    bodyText1: TextStyle(fontWeight: _regular, fontSize: 16),
-    bodyText2: TextStyle(fontWeight: _medium, fontSize: 16),
+    bodyLarge: TextStyle(fontWeight: _regular, fontSize: 16),
+    bodyMedium: TextStyle(fontWeight: _medium, fontSize: 16),
     //
-    caption: TextStyle(fontWeight: _semiBold, fontSize: 16),
-    button: TextStyle(fontWeight: _semiBold, fontSize: 18.0),
+    bodySmall: TextStyle(fontWeight: _semiBold, fontSize: 16),
+    labelLarge: TextStyle(fontWeight: _semiBold, fontSize: 18.0),
   );
 }

@@ -16,7 +16,7 @@ class SearchScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.black87,
+                backgroundColor: Colors.black87,
               ),
               onPressed: () => Navigator.pop(context),
               child: const Text(
