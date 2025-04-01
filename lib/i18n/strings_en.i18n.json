@@ -1,0 +1,71 @@
+{
+   "languageCode": "en",
+   "medinan": "Medinan",
+   "meccan": "Meccan",
+   "tafsir": "Tafsir",
+   "index": "Index",
+   "bookmark": "Bookmark",
+   "saveBookmark": "Save Here",
+   "goToBookmark": "Go To Bookmark",
+   "savedHere": "Saved Here",
+   "savedInPage": "Saved In Page",
+   "settings": "Settings",
+   "themeMode": "Theme Mode",
+   "chooseThemeMode": "Choose Theme Mode",
+   "light": "Light",
+   "dark": "Dark",
+   "language": "Language",
+   "languageOtherLanguage": "اللغة",
+   "chooseLanguage": "Choose Language",
+   "arabic": "Arabic",
+   "arabicOtherLanguage": "العربية",
+   "english": "English",
+   "englishOtherLanguage": "الإنجليزية",
+   "downloadRequired": "Download Required",
+   "fileDownloadMessage": "Some files need to be downloaded before using this app.",
+   "download": "Download",
+   "fileSize": "File Size",
+   "save": "Save",
+   "cancel": "Cancel",
+   "chapter": "Chapter",
+   "chapters": "Chapters",
+   "quarters": "Quraters",
+   "comingSoon": "Comming Soon!",
+   "comingSoonMessage": "This feature is not yet implemented. It will be added in the next update.",
+   "search": "Search",
+   "page": "Page",
+   "juz": "Juz",
+   "surah": "Surah",
+   "ayah": "Ayah",
+   "verse": "Verse",
+   "verses": "Verses",
+   "verseCount": {
+      "one": "1 Verse",
+      "other": "$n Verses"
+   },
+   "word": "Word",
+   "retry": "Retry",
+   "downloadWaitingMessage": "Invest waiting minutes in Dhikr and Istighfar",
+   "exceptions": {
+      "network": {
+         "title": "Network Error",
+         "message": "Please check your internet connection."
+      },
+      "timeout": {
+         "title": "Slow Internet",
+         "message": "Please check your internet connection."
+      },
+      "server": {
+         "title": "Server Error",
+         "message": "A server error has occurred."
+      },
+      "unknown": {
+         "title": "Unknown Error",
+         "message": "An unknown error has occurred."
+      },
+      "custom": {
+         "title": "Error",
+         "message": "An error has occurred."
+      }
+   }
+}
