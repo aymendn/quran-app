@@ -1,0 +1,73 @@
+{
+   "languageCode": "ar",
+   "medinan": "مدنية",
+   "meccan": "مكية",
+   "tafsir": "التفسير",
+   "index": "الفهرس",
+   "bookmark": "علامة",
+   "saveBookmark": "حفظ العلامة هنا",
+   "goToBookmark": "الذهاب إلى العلامة",
+   "savedHere": "تم الحفظ هنا",
+   "savedInPage": "تم الحفظ في الصفحة",
+   "settings": "الإعدادات",
+   "themeMode": "المظهر",
+   "chooseThemeMode": "اختيار المظهر",
+   "light": "فاتح",
+   "dark": "داكن",
+   "language": "اللغة",
+   "languageOtherLanguage": "Language",
+   "chooseLanguage": "اختر اللغة",
+   "arabic": "العربية",
+   "arabicOtherLanguage": "Arabic",
+   "english": "الإنجليزية",
+   "englishOtherLanguage": "English",
+   "downloadRequired": "التنزيل مطلوب",
+   "fileDownloadMessage": "يجب تنزيل بعض الملفات قبل استخدام هذا التطبيق.",
+   "download": "تنزيل",
+   "fileSize": "حجم الملف",
+   "save": "حفظ",
+   "cancel": "إلغاء",
+   "chapter": "السورة",
+   "chapters": "السور",
+   "quarters": "الأرباع",
+   "comingSoon": "قريبًا!",
+   "comingSoonMessage": "هذه الميزة لم يتم تنفيذها بعد. سيتم إضافتها في التحديث القادم.",
+   "search": "بحث",
+   "page": "الصفحة",
+   "juz": "الجزء",
+   "surah": "السورة",
+   "ayah": "الآية",
+   "verse": "الآية",
+   "verses": "الآيات",
+   "verseCount": {
+      "one": "آية واحدة",
+      "two": "آيتان",
+      "few": "$n آيات",
+      "other": "$n آية"
+   },
+   "word": "الكلمة",
+   "retry": "إعادة المحاولة",
+   "downloadWaitingMessage": "استثمر دقائق الانتظار بالذكر و الاستغفار",
+   "exceptions": {
+      "network": {
+         "title": "خطأ في الشبكة",
+         "message": "يرجى التحقق من اتصال الإنترنت."
+      },
+      "timeout": {
+         "title": "اتصال بطيء بالإنترنت",
+         "message": "يرجى التحقق من اتصال الإنترنت."
+      },
+      "server": {
+         "title": "خطأ في الخادم",
+         "message": "حدث خطأ في الخادم."
+      },
+      "unknown": {
+         "title": "خطأ غير معروف",
+         "message": "حدث خطأ غير معروف."
+      },
+      "custom": {
+         "title": "خطأ",
+         "message": "حدث خطأ."
+      }
+   }
+}

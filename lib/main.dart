@@ -1,82 +1,81 @@
-import 'package:flutter/material.dart';
-import 'package:my_quran_app/providers/bookmark.dart';
-import 'package:my_quran_app/providers/theme_provider.dart';
-import 'package:my_quran_app/providers/toast.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
 
-import 'core/index.dart';
-import 'providers/quran.dart';
-import 'providers/show_overlay_provider.dart';
-import 'screens/douaa_screen.dart';
-import 'screens/home_screen.dart';
-import 'screens/index_screen.dart';
-import 'screens/juz_index_screen.dart';
-import 'screens/search_screen.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+// ignore:depend_on_referenced_packages
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quran_app/app.dart';
+import 'package:quran_app/i18n/strings.g.dart';
+import 'package:quran_app/providers/quran_db_provider.dart';
+import 'package:quran_app/providers/shared_preferences_provider.dart';
+import 'package:quran_app/utils/io.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final prefs = await SharedPreferences.getInstance();
+  // * Initialize IO
+  await IO.init();
+
+  // * Initialize shared preferences
+  await SharedPreferencesService.init();
+
+  // * Initialize db
+  await QuranDBService.init();
+
+  // * Make GoRouter's push and pop methods work on web urls
+  GoRouter.optionURLReflectsImperativeAPIs = true;
+
+  // * turn off the # in the URLs on the web
+  usePathUrlStrategy();
+
+  // * Register error handlers. For more info, see:
+  // * https://docs.flutter.dev/testing/errors
+  registerErrorHandlers();
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ThemeProvider>(
-          create: (context) => ThemeProvider(),
+    ProviderScope(
+      child: TranslationProvider(
+        child: ScreenUtilInit(
+          designSize: const Size(360, 800),
+          builder: (_, __) => const QuranApp(),
         ),
-        ChangeNotifierProvider<ShowOverlayProvider>(
-          create: (context) => ShowOverlayProvider(),
-        ),
-        ChangeNotifierProvider<Quran>(
-          create: (context) => Quran(prefs),
-        ),
-        ChangeNotifierProxyProvider<Quran, BookMarkProvider>(
-          create: (context) => BookMarkProvider(prefs),
-          update: (context, value, previous) =>
-              previous!..update(value.currentPage),
-        ),
-        ChangeNotifierProxyProvider<Quran, ToastProvider>(
-          create: (context) => ToastProvider(),
-          update: (context, value, previous) =>
-              previous!..update(value.hizbQuarter),
-        ),
-      ],
-      child: const MyApp(),
+      ),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, theme, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Quran App',
-          theme: AppTheme.lightThemeData,
-          darkTheme: AppTheme.darkThemeData,
-          themeMode: theme.themeMode,
-          home: const HomeScreen(),
-          localizationsDelegates: const [
-            GlobalCupertinoLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
+void registerErrorHandlers() {
+  // * Show some error UI if any uncaught exception happens
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    debugPrint(details.toString());
+  };
+  // * Handle errors from the underlying platform/OS
+  PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+    debugPrint(error.toString());
+    return true;
+  };
+  // * Show some error UI when any widget in the app fails to build
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return MaterialApp(
+      home: Scaffold(
+        body: ListView(
+          children: [
+            Center(
+              child: Text(
+                details.toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+            ),
           ],
-          supportedLocales: const [Locale("ar", "AE")],
-          locale: const Locale("ar", "AE"),
-          routes: {
-            '/index': (context) => const IndexScreen(),
-            '/juz-index': (context) => const JuzIndexScreen(),
-            '/douaa': (context) => const DouaaScreen(),
-            '/search': (context) => const SearchScreen(),
-          },
-        );
-      },
+        ),
+      ),
     );
-  }
+  };
 }
