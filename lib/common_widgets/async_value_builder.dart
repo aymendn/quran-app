@@ -1,6 +1,8 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:quran_app/common_widgets/custom_button.dart';
 import 'package:quran_app/common_widgets/custom_loading.dart';
@@ -29,7 +31,7 @@ class AsyncValueBuilder<T> extends StatelessWidget {
   final AsyncValue<T> value;
   final T? fakeValue;
   final Widget Function(T value) data;
-  final Widget Function(Object error, StackTrace? stackTrace)? error;
+  final Widget Function(AppException e)? error;
   final Widget Function()? loading;
   final Color? foregroundColor;
   final Color? backgroundColor;
@@ -79,35 +81,49 @@ class AsyncValueBuilder<T> extends StatelessWidget {
   }
 
   Widget errorBuilder(AppException e, StackTrace st, BuildContext context) {
-    final errorWidget = error?.call(e, st) ??
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              e.message,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: (foregroundColor ?? context.colors.textPrimary)
-                    .withOpacity(0.7),
-              ),
-            ),
-            10.gapH,
-            if (onRefresh != null)
-              CustomButton(
-                foregroundColor: context.colors.textPrimary,
-                backgroundColor: Colors.transparent,
-                strokeColor: context.colors.textPrimary.withOpacity(.3),
-                icon: Symbols.refresh,
-                onPressed: onRefresh,
-                text: context.t.retry,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.rm,
-                  vertical: 10.rm,
+    final appException = AppException.fromDartException(e, st);
+
+    final errorWidget = error?.call(appException) ??
+        DottedBorder(
+          color:
+              (foregroundColor ?? context.colors.textPrimary).withOpacity(.3),
+          strokeWidth: 1,
+          radius: const Radius.circular(8),
+          borderType: BorderType.RRect,
+          padding: EdgeInsets.all(20.rm),
+          dashPattern: [2.r, 2.r],
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  appException.message,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: (foregroundColor ?? context.colors.textPrimary)
+                        .withOpacity(0.9),
+                  ),
                 ),
-                rowMainAxisSize: MainAxisSize.min,
-              ),
-          ],
+                10.gapH,
+                if (onRefresh != null)
+                  CustomButton(
+                    foregroundColor: context.colors.textPrimary,
+                    backgroundColor: Colors.transparent,
+                    strokeColor: context.colors.textPrimary.withOpacity(.3),
+                    icon: Symbols.refresh,
+                    onPressed: onRefresh,
+                    text: context.t.retry,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.rm,
+                      vertical: 10.rm,
+                    ),
+                    rowMainAxisSize: MainAxisSize.min,
+                  ),
+              ],
+            ),
+          ),
         );
 
     if (showLoadingOnError) {

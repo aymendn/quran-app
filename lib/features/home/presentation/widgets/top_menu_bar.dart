@@ -19,7 +19,11 @@ class TopMenuBar extends StatelessWidget {
         textDirection: TextDirection.rtl,
         children: [
           TextButton.icon(
-            icon: Icon(Symbols.menu_rounded, size: 18.spMin),
+            icon: Icon(
+              Symbols.menu_rounded,
+              size: 18.spMin,
+              color: Colors.white,
+            ),
             onPressed: () => context.goNamed(Routes.index_.name),
             label: Text(context.t.index),
             style: TextButton.styleFrom(

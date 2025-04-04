@@ -74,25 +74,9 @@ class OnboardingScreen extends StatelessWidget {
           ),
           12.gapH,
           CustomButton(
-            text: context.t.download,
-            onPressed: () => context.goNamed(Routes.download.name),
+            text: context.t.next,
+            onPressed: () => context.goNamed(Routes.chooseRiwayah.name),
             width: double.infinity,
-          ),
-          8.gapH,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Symbols.download_for_offline_rounded,
-                size: 22.r,
-                color: context.colors.textSecondary,
-              ),
-              4.gapW,
-              Text(
-                '${context.t.fileSize} 134 MB',
-                style: context.textTheme.labelSmall,
-              ),
-            ],
           ),
         ],
       ),

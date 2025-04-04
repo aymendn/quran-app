@@ -7,7 +7,7 @@ import 'package:quran_app/common_widgets/scrollable_column.dart';
 import 'package:quran_app/common_widgets/svg_icon.dart';
 import 'package:quran_app/extensions/context_extensions.dart';
 import 'package:quran_app/extensions/screen_utils_extensions.dart';
-import 'package:quran_app/features/onboarding/presentation/downlaod/download_controller.dart';
+import 'package:quran_app/features/onboarding/presentation/onboarding_controller.dart';
 import 'package:quran_app/features/onboarding/presentation/widgets/azkar_slider.dart';
 import 'package:quran_app/features/onboarding/presentation/widgets/download_progress_bar.dart';
 import 'package:quran_app/i18n/strings.g.dart';
@@ -17,8 +17,8 @@ class DownloadScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(downloadControllerProvider);
-    final notifier = ref.read(downloadControllerProvider.notifier);
+    final controller = ref.watch(onboardingControllerProvider);
+    final notifier = ref.read(onboardingControllerProvider.notifier);
 
     return CustomScaffold(
       appBar: AppBar(toolbarHeight: 0),
@@ -39,14 +39,14 @@ class DownloadScreen extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(controller.progressRatio,
+              Text(controller.downlaodProgressPercentage,
                   style: context.textTheme.labelSmall),
-              Text(controller.progressString,
-                  style: context.textTheme.labelSmall),
+              // Text(controller.downloadStatus.toString(),
+              //     style: context.textTheme.labelSmall),
             ],
           ),
           4.gapH,
-          DownloadProgressBar(progress: controller.progressInt),
+          DownloadProgressBar(progress: controller.downloadProgressIntOrNull),
           24.gapH,
           SvgIcon(
             Assets.icons.quranText.path,

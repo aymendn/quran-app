@@ -42,11 +42,13 @@ class TafsirBottomSheet extends ConsumerWidget {
             child: const TafsirBottomSheetAppBar(),
           ),
         ),
-        ProviderScope(
-          overrides: [
-            scrollControllerProvider.overrideWithValue(scrollController),
-          ],
-          child: const TafsirContent(),
+        Expanded(
+          child: ProviderScope(
+            overrides: [
+              scrollControllerProvider.overrideWithValue(scrollController),
+            ],
+            child: const TafsirContent(),
+          ),
         ),
         Container(
           height: 56.hm,

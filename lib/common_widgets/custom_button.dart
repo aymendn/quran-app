@@ -189,7 +189,7 @@ class CustomButton extends StatelessWidget {
     final fixedSize =
         height == null || width == null ? null : Size(width!, height!);
     final padding = this.padding ??
-        EdgeInsets.symmetric(horizontal: 24.wm, vertical: 16.hm);
+        EdgeInsets.symmetric(horizontal: 24.wm, vertical: 14.hm);
     final side = strokeColor == null
         ? null
         : BorderSide(

@@ -36,7 +36,7 @@ class PagesCarousel extends ConsumerWidget {
               aspcectRatioRange: (min: 0.48, max: 0.66),
               child: InvertColor(
                 child: Image.file(
-                  File(IO.getPageLocalPath(RiwayaEnum.warsh, index + 1)),
+                  File(IO.getPageLocalPath(index + 1)),
                   fit: BoxFit.fill,
                 ),
               ),

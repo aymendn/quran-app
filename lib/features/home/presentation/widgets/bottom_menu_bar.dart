@@ -64,6 +64,7 @@ class BottomMenuBar extends ConsumerWidget {
                   icon: Icon(
                     Symbols.book_rounded,
                     size: 16.spMin,
+                    color: Colors.white,
                   ),
                   label: Text(
                     context.t.tafsir,
@@ -79,7 +80,11 @@ class BottomMenuBar extends ConsumerWidget {
                         ? Colors.white10
                         : Colors.transparent,
                   ),
-                  icon: Icon(Symbols.bookmark, size: 16.spMin),
+                  icon: Icon(
+                    Symbols.bookmark,
+                    size: 16.spMin,
+                    color: Colors.white,
+                  ),
                   label: Text(context.t.bookmark),
                 ),
               ),

@@ -54,7 +54,10 @@ class BookmarkMenu extends ConsumerWidget {
                 foregroundColor: Colors.white,
                 disabledForegroundColor: Colors.white24,
               ),
-              icon: Icon(Symbols.move_item, size: 16.spMin),
+              icon: Icon(
+                Symbols.move_item,
+                size: 16.spMin,
+              ),
               label: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

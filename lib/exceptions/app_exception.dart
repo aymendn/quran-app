@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quran_app/i18n/strings.g.dart';
 
 enum AppExceptionType {
@@ -104,6 +105,14 @@ class AppException implements Exception {
       error: e,
       stackTrace: st,
     );
+  }
+
+  static AsyncValue<T> asAsyncError<T>(
+    Object? e,
+    StackTrace? st,
+  ) {
+    final error = AppException.fromDartException(e, st);
+    return AsyncError(error, st ?? StackTrace.current);
   }
 
   Map<String, dynamic> toMap() {

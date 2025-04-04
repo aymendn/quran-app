@@ -7,6 +7,7 @@ import 'package:quran_app/features/tafsir/presentation/tafsir_bottom_sheet.dart'
 import 'package:quran_app/features/tafsir/presentation/tafsir_controller.dart';
 import 'package:quran_app/features/tafsir/presentation/tafsir_section.dart';
 import 'package:quran_app/features/tafsir/presentation/verse_widget.dart';
+import 'package:quran_app/utils/constants.dart';
 import 'package:quran_app/utils/quran_utils.dart';
 
 class TafsirContent extends ConsumerWidget {
@@ -17,26 +18,24 @@ class TafsirContent extends ConsumerWidget {
     final scrollController = ref.watch(scrollControllerProvider);
     final notifier = ref.read(tafsirControllerProvider.notifier);
 
-    return Expanded(
-      child: PageView.builder(
-        itemCount: 6236,
-        controller: notifier.pageController,
-        onPageChanged: notifier.onPageChanged,
-        reverse: context.isLtr,
-        itemBuilder: (context, index) {
-          return SingleChildScrollView(
-            controller: scrollController,
-            padding: EdgeInsets.symmetric(horizontal: 16.hm, vertical: 16.wm),
-            child: Column(
-              children: [
-                VerseWidget(index: index),
-                24.gapH,
-                TafsirSection(index: index),
-              ],
-            ),
-          );
-        },
-      ),
+    return PageView.builder(
+      itemCount: Constants.versesCount,
+      controller: notifier.pageController,
+      onPageChanged: notifier.onPageChanged,
+      reverse: context.isLtr,
+      itemBuilder: (context, index) {
+        return SingleChildScrollView(
+          controller: scrollController,
+          padding: EdgeInsets.symmetric(horizontal: 16.hm, vertical: 16.wm),
+          child: Column(
+            children: [
+              VerseWidget(index: index),
+              24.gapH,
+              TafsirSection(index: index),
+            ],
+          ),
+        );
+      },
     );
   }
 }
