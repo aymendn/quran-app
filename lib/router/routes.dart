@@ -5,4 +5,6 @@ enum Routes {
   settings,
   index_,
   tafsir,
+  chooseRiwayah,
+  manageTafsir,
 }

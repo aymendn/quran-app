@@ -24,8 +24,8 @@ class AppColors {
   });
 
   static const light = AppColors(
-    primary: Color(0xFF673E00),
-    secondary: Color(0xFFFFE4A1),
+    primary: Color.fromARGB(255, 0, 114, 101),
+    secondary: Color.fromARGB(255, 124, 187, 255),
     appBarBackground: Color(0xFFFFFFFF),
     textPrimary: Color(0xFF492E05),
     textSecondary: Color(0xB4563400),
@@ -41,8 +41,8 @@ class AppColors {
   );
 
   static const dark = AppColors(
-    primary: Color(0xFF673E00),
-    secondary: Color(0xFFFFE4A1),
+    primary: Color.fromARGB(255, 0, 114, 101),
+    secondary: Color.fromARGB(255, 124, 187, 255),
     appBarBackground: Color(0xFF1D1E40),
     textPrimary: Color(0xFFE0E0E0),
     textSecondary: Color(0xFFA8ADAF),

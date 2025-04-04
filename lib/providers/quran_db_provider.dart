@@ -1,95 +1,76 @@
 import 'dart:io';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_archive/flutter_archive.dart';
 import 'package:path/path.dart';
 import 'package:quran_app/debug/logger.dart';
 import 'package:quran_app/utils/io.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract class QuranDBService {
-  static late Database _quranHafsDB;
-  static late Database _quranWarshDB;
-  static late Database _tafsirDB;
-  static late Database _versePositionDB;
+class DatabaseModel extends Equatable {
+  final String fileName;
+  final Database database;
 
-  static Database get quranHafsDB => _quranHafsDB;
-  static Database get quranWarshDB => _quranWarshDB;
-  static Database get tafsirDB => _tafsirDB;
-  static Database get versePositionDB => _versePositionDB;
+  const DatabaseModel(this.fileName, this.database);
 
-  static final String zipFilePath = join('assets', 'db', 'db.zip');
-  static final String dbFolderPath = join(IO.supportFolderPath, 'db');
-  static final String zipFileMovedPath = join(dbFolderPath, 'db.zip');
-  static final String tafsirDBPath = join(dbFolderPath, 'tafaseer.db');
-  static final String versePositionDBPath =
-      join(dbFolderPath, 'verse_position_warsh.db');
-  static final String quranHafsDBPath = join(dbFolderPath, 'quran_hafs.db');
-  static final String quranWarshDBPath = join(dbFolderPath, 'quran_warsh.db');
+  String get fullPath => getFullPath(fileName);
 
-  static Future<void> init() async {
-    logger.fine('Starting QuranDBService.init()');
-
-    // if db folder does not exist, create it
-    final dbFolder = Directory(dbFolderPath);
-    if (!dbFolder.existsSync()) {
-      dbFolder.createSync();
-    }
-
-    logger.fine('Verifying db folder: $dbFolderPath');
-
-    // verify that the db folder contains the db files
-    final dbFiles = [
-      File(quranHafsDBPath),
-      File(quranWarshDBPath),
-      File(tafsirDBPath),
-      File(versePositionDBPath),
-    ];
-
-    if (dbFiles.every((file) => file.existsSync())) {
-      // open the db files
-      _quranHafsDB = await openDatabase(quranHafsDBPath, readOnly: true);
-      _quranWarshDB = await openDatabase(quranWarshDBPath, readOnly: true);
-      _tafsirDB = await openDatabase(tafsirDBPath, readOnly: true);
-      _versePositionDB =
-          await openDatabase(versePositionDBPath, readOnly: true);
-
-      // remove the zip file if it exists
-      final zipFile = File(zipFileMovedPath);
-      if (zipFile.existsSync()) {
-        zipFile.deleteSync();
-      }
-      return;
-    }
-
-    logger.fine('DB files not found, extracting from zip file');
-
-    // extract the db files
-    ByteData data = await rootBundle.load(zipFilePath);
-    List<int> bytes = data.buffer.asUint8List();
-
-    // // Write the zip file
-    final zipFileMoved = File(zipFileMovedPath);
-    await zipFileMoved.writeAsBytes(bytes);
-
-    // Extract the zip file
-    await ZipFile.extractToDirectory(
-      zipFile: zipFileMoved,
-      destinationDir: Directory(dbFolderPath),
+  static String getFullPath(String fileName) {
+    return IO.joinPaths(
+      IO.supportFolderPath, // this is the path to the app's support folder
+      'tafsir', // the folder where the db is stored
+      '$fileName.db', // the name of the file + db
     );
+  }
 
-    logger.fine('DB files extracted to: $dbFolderPath');
+  static Future<DatabaseModel> fromFileName(String fileName) async {
+    final fullPath = getFullPath(fileName);
+    logger.fine('Opening database: $fullPath');
+    final db = await openDatabase(fullPath, readOnly: true);
+    return DatabaseModel(fileName, db);
+  }
 
-    // open the db files
-    _quranHafsDB = await openDatabase(quranHafsDBPath, readOnly: true);
-    _quranWarshDB = await openDatabase(quranWarshDBPath, readOnly: true);
-    _tafsirDB = await openDatabase(tafsirDBPath, readOnly: true);
-    _versePositionDB = await openDatabase(versePositionDBPath, readOnly: true);
+  @override
+  List<Object?> get props => [fileName];
+}
 
-    // remove the zip file if it exists
-    final zipFile = File(zipFileMovedPath);
-    if (zipFile.existsSync()) {
-      zipFile.deleteSync();
+abstract class QuranDBService {
+  static List<DatabaseModel> databases = [];
+  static Database? _quranDB;
+
+  static Future<Database> getDatabase(String fileName) async {
+    for (final db in databases) {
+      if (db.fileName == fileName) {
+        return db.database;
+      }
     }
+
+    final db = await DatabaseModel.fromFileName(fileName);
+    databases.add(db);
+    return db.database;
+  }
+
+  static final String quranDBAssetPath = join('assets', 'db', 'quran.db');
+  static final String quranDBPath = join(IO.supportFolderPath, 'quran.db');
+
+  static Future<Database> getQuranDB() async {
+    if (_quranDB != null) {
+      return _quranDB!;
+    }
+
+    // if file is not in `quranDBPath`, then copy it from `quranDBAssetPath`
+    final file = File(quranDBPath);
+    if (!file.existsSync()) {
+      // Load the DB from assets.
+      final data = await rootBundle.load(quranDBAssetPath);
+      final bytes =
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+      // Create the file in the app's support folder.
+      await file.writeAsBytes(bytes, flush: true);
+    }
+
+    _quranDB = await openDatabase(quranDBPath, readOnly: true);
+    return _quranDB!;
   }
 }

@@ -1,6 +1,16 @@
+import 'dart:convert';
 import 'dart:math';
 
 abstract class HelperFunctions {
+  static Map<String, dynamic> jsonDecodeSafe(String jsonString) {
+    try {
+      if (jsonString.isEmpty) return {};
+      return jsonDecode(jsonString);
+    } catch (_) {
+      return {};
+    }
+  }
+
   static String generateArabicLoremIpsum(int numberOfWords) {
     final List<String> arabicWords = [
       'لوريم',

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
@@ -40,6 +41,19 @@ final dioProvider = Provider<Dio>((ref) {
         options.headers.addAll(headers);
         return handler.next(options);
       },
+    ),
+  );
+
+  // // Logger interceptor
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true, // true
+      responseHeader: false,
+      responseBody: true, // true
+      error: true, // true
+      compact: true,
+      maxWidth: 100,
     ),
   );
 

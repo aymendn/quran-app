@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quran_app/features/home/presentation/home_screen.dart';
 import 'package:quran_app/features/index/presentation/index_screen.dart';
+import 'package:quran_app/features/onboarding/presentation/choose_riwayah/choose_riwayah_screen.dart';
 import 'package:quran_app/features/onboarding/presentation/downlaod/download_screen.dart';
 import 'package:quran_app/features/onboarding/presentation/onboarding/onboarding_screen.dart';
+import 'package:quran_app/features/settings/presentation/manage_tafsir/manage_tafsir_screen.dart';
 import 'package:quran_app/features/settings/presentation/settings_screen.dart';
 import 'package:quran_app/router/custom_go_route.dart';
 import 'package:quran_app/router/route_utils.dart';
@@ -64,6 +66,13 @@ class RouterNotifier extends ChangeNotifier {
           path: 'settings',
           name: Routes.settings.name,
           page: const SettingsScreen(),
+          routes: [
+            CustomGoRoute(
+              path: 'manage-tafsir',
+              name: Routes.manageTafsir.name,
+              page: const ManageTafsirScreen(),
+            ),
+          ],
         ),
         CustomGoRoute(
           path: 'index',
@@ -83,6 +92,14 @@ class RouterNotifier extends ChangeNotifier {
       path: '/onboarding',
       name: Routes.onboarding.name,
       page: const OnboardingScreen(),
+      routes: [
+        // choose riwayah
+        CustomGoRoute(
+          path: 'choose-riwayah',
+          name: Routes.chooseRiwayah.name,
+          page: const ChooseRiwayahScreen(),
+        ),
+      ],
     ),
 
     // download

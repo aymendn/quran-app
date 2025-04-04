@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quran_app/assets/fonts.gen.dart';
 import 'package:quran_app/theme/colors.dart';
 
@@ -131,12 +132,14 @@ abstract final class AppTheme {
           fontFamily: fontFamily,
           fontSize: 16,
           fontWeight: FontWeight.w400,
+          height: 1.2.spMin,
         ),
         subtitleTextStyle: TextStyle(
           color: colors.label,
           fontFamily: fontFamily,
           fontSize: 12,
           fontWeight: FontWeight.normal,
+          height: 1.5.spMin,
         ),
         leadingAndTrailingTextStyle: TextStyle(
           color: colors.label,

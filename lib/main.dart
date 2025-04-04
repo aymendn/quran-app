@@ -9,7 +9,6 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quran_app/app.dart';
 import 'package:quran_app/i18n/strings.g.dart';
-import 'package:quran_app/providers/quran_db_provider.dart';
 import 'package:quran_app/providers/shared_preferences_provider.dart';
 import 'package:quran_app/utils/io.dart';
 
@@ -22,8 +21,9 @@ Future<void> main() async {
   // * Initialize shared preferences
   await SharedPreferencesService.init();
 
-  // * Initialize db
-  await QuranDBService.init();
+
+  // // * Initialize db
+  // await QuranDBService.init();
 
   // * Make GoRouter's push and pop methods work on web urls
   GoRouter.optionURLReflectsImperativeAPIs = true;
